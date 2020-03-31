@@ -27,20 +27,20 @@ public class DiceApp {
 		Stream<Integer> resultStream = Stream.generate(sumOneThrow).limit(Number_Of_Throws);
 		
 		//Create New map and fill it with all possible keys [2,12]and set all values to 0 to start counting. 
-		Map <Integer, Integer> statisticRecult = new TreeMap<>();
+		Map <Integer, Integer> statisticResult = new TreeMap<>();
 		for (int i = Mix_Sum_Value ; i <= Max_Sum_Value ; i++) {
-			statisticRecult.putIfAbsent(i, 0);
+			statisticResult.putIfAbsent(i, 0);
 		}
 		//Filling the map by adding 1 to the value of a specific key each time I got the key form the stream 
 		//which is the sum of the two dices.		
-		statisticRecult= resultStream.collect(Collectors.toMap(k->k, v->v, (oldValue, newValue) -> oldValue + 1));
+		statisticResult= resultStream.collect(Collectors.toMap(k->k, v->v, (oldValue, newValue) -> oldValue + 1));
 		//Calculating the Percentage.
 		BiFunction <Integer, Integer, Float> Percentage = 
-				(Integer total, Integer decetedCases) ->
-					{return (decetedCases*100)/(float)total;};
+				(Integer total, Integer detcetedCases) ->
+					{return (detcetedCases*100)/(float)total;};
 		//Formating and printing the map.
 		System.out.format("Throw Result\tNumber of Appearances\tPercentage chance%n\t\t   In %d Throw \t  Appearances%n----------------|-------------------|---------------%n",Number_Of_Throws);
-		statisticRecult.forEach((k,v) -> System.out.format("\t%d\t|\t  %d\t    |\t   %5.2f%% %n----------------|-------------------|---------------%n"
+		statisticResult.forEach((k,v) -> System.out.format("\t%d\t|\t  %d\t    |\t   %5.2f%% %n----------------|-------------------|---------------%n"
 				,k,v, Percentage.apply(Number_Of_Throws, v)));
 	}
 
